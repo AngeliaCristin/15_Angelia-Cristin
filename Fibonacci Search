@@ -1,0 +1,47 @@
+def fibonacci_search(arr, x):
+    n = len(arr)
+    fibonacci2 = 0
+    fibonacci1 = 1
+    fibonacci = fibonacci1 + fibonacci2
+    while fibonacci < n:
+        fibonacci2 = fibonacci1
+        fibonacci1 = fibonacci
+        fibonacci = fibonacci1 + fibonacci2
+    offset = -1
+    while fibonacci > 1:
+        i = min(offset+fibonacci2, n-1)
+        if arr[i] < x:
+            fibonacci = fibonacci1
+            fibonacci1 = fibonacci2
+            fibonacci2 = fibonacci - fibonacci1
+            offset = i
+        elif arr[i] > x:
+            fibonacci = fibonacci2
+            fibonacci1 = fibonacci1 - fibonacci2
+            fibonacci2 = fibonacci - fibonacci1
+        else:
+            return i
+    if fibonacci1 and arr[offset+1] == x:
+        return offset+1
+    return -1
+
+var = ["Arsel", "Avivah", "Daiva", [ "Wahyu", "Wibi"]]
+
+# Mencari dan menampilkan data pada indeks tertentu
+print("1. Arsel di Index", fibonacci_search(var, "Arsel"))
+print("   Avivah di Index", fibonacci_search(var, "Avivah"))
+print("   Daiva di Index", fibonacci_search(var, "Daiva"))
+
+# Mencari dan menampilkan data pada indeks tertentu dari list yang bersarang
+for i in range(len(var)):
+    if isinstance(var[i], list):
+        if fibonacci_search(var[i], "Wahyu") != -1:
+            print("2. Wahyu di Index", i, "pada kolom", fibonacci_search(var[i], "Wahyu"))
+        else:
+            print ('!!! Wahyu TIDAK DITEMUKAN !!!')
+        if fibonacci_search(var[i], "Wibi") != -1:
+            print("3. Wibi di Index", i, "pada kolom", fibonacci_search(var[i], "Wibi"))
+        else:
+            print ('!!! Wibi TIDAK DITEMUKAN !!!')
+
+fibonacci_search
